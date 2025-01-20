@@ -1,13 +1,13 @@
+
 /*
  *  Service constructor
  */
 function AnimalService() {
     // if there is no entry for animals in local storage
     if (!localStorage.getItem('animals')) {
-        // https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage  
         // create a new entry in local storage and put an empty array in it
         localStorage.setItem('animals', JSON.stringify([]))
-    }    
+    }
 }
 /*
  *
@@ -38,17 +38,26 @@ AnimalService.prototype.saveAnimal = function(animal) {
  *
  */
 AnimalService.prototype.findAnimal = function(animalName) {
-    return null;
+    const animals = this.getAnimals();
+    const animal = animals.find(a => a.name == animalName);
+    if (!animal) {
+        throw new Error('That animal does not exist!');
+    }
+    return animal;
 }
-
 /*
  *
  */
 AnimalService.prototype.updateAnimal = function(animal) {
-
-    return false;
+    const animals = this.getAnimals();
+    const idx = animals.findIndex(a => a.name == animal.name);
+    if (idx === -1) {
+        throw new Error('That animal does not exist!');
+    }
+    animals[idx] = animal;
+    localStorage.setItem('animals', JSON.stringify(animals));
+    return true;
 }
-
 /*
  *
  */
@@ -62,5 +71,4 @@ AnimalService.prototype.deleteAnimal = function(animal) {
     localStorage.setItem('animals', JSON.stringify(animals));
     return true;
 }
-
-const animalService = new AnimalService();
+export default new AnimalService();
