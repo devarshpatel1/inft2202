@@ -118,8 +118,12 @@ function insertMoviesIntoTable(eleTable, moviesList) {
         btnCell.appendChild(btn);
         // create another table row and put the button in it
         // if a movie is rated two or below, make this row red
+        if (movie.rating <= 2) row.classList.add("table-danger");
         // if this movie is rated higher than two but less than or equal to five, make this row orange
+        else if (movie.rating > 2 && movie.rating <= 5) row.classList.add("table-warning");
         // if this movie is rated higher than five but less than or equal to 8, make this row blue
+        else if (movie.rating > 5 && movie.rating <= 8) row.classList.add("table-info");
         // if this movie is rated higher than eight, make this row green
+        else if (movie.rating > 8) row.classList.add("table-success");
     });
 }
