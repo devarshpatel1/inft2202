@@ -1,4 +1,6 @@
 // import the movies array from the supplied data file.
+import { movies } from "../data/movies.js";
+
 // write the array to the console, so you can see that they are loading properly
 /* call insertMoviesIntoTable, 
     give it a reference to the table you want to populate,
@@ -13,14 +15,38 @@
     give it a reference to the table you want to populate,
     and the list of movies you want to show in the table */
 // show the table
-
-
+document.addEventListener("DOMContentLoaded", () => {
+    console.log(movies);
+    
+    const allMoviesTable = document.querySelector("#all-movies-container table");
+    const pinnedMoviesTable = document.querySelector("#pinned-movies-container table");
+    
+    let pinnedMovies = getPinnedMoviesFromStorage();
+    console.log(pinnedMovies);
+    
+    if (pinnedMovies.length === 0) {
+        document.querySelector("#pinned-movies-container .alert").classList.remove("d-none");
+    } else {
+        document.querySelector("#pinned-movies-container .alert").classList.add("d-none");
+        pinnedMoviesTable.classList.remove("d-none");
+        insertMoviesIntoTable(pinnedMoviesTable, pinnedMovies);
+    }
+    
+    if (movies.length === 0) {
+        document.querySelector("#all-movies-container .alert").classList.remove("d-none");
+    } else {
+        document.querySelector("#all-movies-container .alert").classList.add("d-none");
+        allMoviesTable.classList.remove("d-none");
+        insertMoviesIntoTable(allMoviesTable, movies);
+    }
+});
 
 /* 
  *  getPinnedMoviesFromStorage
  *  This should take no parameters, and return an array.
  */
 function getPinnedMoviesFromStorage() {
+    return JSON.parse(localStorage.getItem("pinnedMovies")) || [];
 }
 
 /*
