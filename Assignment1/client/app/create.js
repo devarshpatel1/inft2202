@@ -67,6 +67,30 @@ function validateProductForm(form) {
     } else {
         elePriceError.classList.add('d-none');
     }
+
+    const stock = form.stock.value;
+    const eleStockError = form.stock.nextElementSibling;
+    if (stock === "") {
+        eleStockError.classList.remove('d-none');
+        eleStockError.textContent = "Enter product Stock!";
+        valid = false;
+    } else if (isNaN(stock)) {
+        eleStockError.classList.remove('d-none');
+        eleStockError.textContent = "Stock must be a number!";
+        valid = false;
+    } else {
+        elePriceError.classList.add('d-none');
+    }
+
+    const desc = form.desc.value;
+    const eleDescError = form.desc.nextElementSibling;
+    if (desc === "") {
+        eleDescError.classList.remove('d-none');
+        eleDescError.textContent = "Enter product Description!";
+        valid = false;
+    } else {
+        elePriceError.classList.add('d-none');
+    }
     
     return valid;
 }
