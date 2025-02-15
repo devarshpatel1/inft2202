@@ -1,3 +1,5 @@
+// Name: Devarsh Patel
+// Description: INFT 2202: Product Inventory System
 
 /*
  *  Service constructor

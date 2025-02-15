@@ -1,3 +1,6 @@
+// Name: Devarsh Patel
+// Description: INFT 2202: Product Inventory System
+
 /* index.js */
 
 import productService from "./product.service.mock.js";

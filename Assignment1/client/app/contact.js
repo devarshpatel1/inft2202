@@ -1,3 +1,7 @@
+// Name: Devarsh Patel
+// Description: INFT 2202: Product Inventory System
+
+
 // make sure storage is set up for messages
 if (!localStorage.getItem('messages')) {
     localStorage.setItem('messages', JSON.stringify([]));
