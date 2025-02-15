@@ -76,6 +76,26 @@ function product(name) {
         } else {
             elePriceError.classList.add('d-none');
         }
+
+        const stock = form.stock.value;
+        const eleStockError = form.stock.nextElementSibling;
+        if (stock === "" || isNaN(stock)) {
+            eleStockError.classList.remove('d-none');
+            eleStockError.textContent = "Enter a valid stock!";
+            valid = false;
+        } else {
+            eleStockError.classList.add('d-none');
+        }
+
+        const desc = form.desc.value;
+        const eleDescError = form.desc.nextElementSibling;
+        if (desc === "") {
+            eleDescError.classList.remove('d-none');
+            eleDescError.textContent = "Enter product description!";
+            valid = false;
+        } else {
+            eleDescError.classList.add('d-none');
+        }
         
         return valid;
     }
