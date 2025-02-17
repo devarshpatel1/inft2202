@@ -82,10 +82,11 @@ function list(recordPage) {
     }
     function createContent() {
         const params = new URLSearchParams(recordPage);
-        const url = new URL(`/api/animals?${params.toString()}`, 'https://inft2202-server.onrender.com');
+        const url = new URL(`/api/animals?${params.toString()}`, 'https://inft2202.opentech.durhamcollege.org');
         const req = new Request(url, {
             headers: {
-                'User': 'studentId'
+                'User': '100943425',
+                'apiKey': '7bfa2060-9d12-42fe-8549-cf9205d269a0'
             },
             method: 'GET',
         });
