@@ -52,18 +52,23 @@ ProductService.prototype.findProduct = async function(name) {
 /*
  *  Get Paginated Products
  */
-ProductService.prototype.getProductPage = async function({ page = 1, perPage = 15 }) {
+ProductService.prototype.getProductPage = async function({ page = 1, perPage = 15 }) 
+{
+    const params = new URLSearchParams({ page, perPage });
+    const url = new URL(`/api/products?${params.toString()}`, this.host);
+    const req = new Request(url, {
+        headers: this.headers,
+        method: 'GET',
+    });
     try {
-        const params = new URLSearchParams({ page, perPage });
-        const res = await fetch(new URL(`/api/products?${params}`, this.host), {
-            headers: this.headers,
-            method: 'GET',
-        });
+        const res = await fetch(req);
         return res.json();
     } catch (err) {
-        throw new Error('Failed to fetch product page');
+        return false;
     }
 }
+
+    
 
 /*
  *  Create New Product

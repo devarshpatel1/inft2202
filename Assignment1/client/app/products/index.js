@@ -39,8 +39,8 @@ function product(name) {
         
         const mb3Description = document.createElement('div');
         mb3Description.classList.add('mb-3');
-        mb3Description.innerHTML = '<label for="desc" class="form-label">Description</label>' +
-            `<input type="text" class="form-control" id="desc" name="desc" value="${product ? product.desc : ""}">` +
+        mb3Description.innerHTML = '<label for="description" class="form-label">Description</label>' +
+            `<input type="text" class="form-control" id="description" name="description" value="${product ? product.description : ""}">` +
             '<p class="text-danger d-none"></p>';
         container.append(mb3Description);
 
@@ -87,8 +87,8 @@ function product(name) {
             eleStockError.classList.add('d-none');
         }
 
-        const desc = form.desc.value;
-        const eleDescError = form.desc.nextElementSibling;
+        const desc = form.description.value;
+        const eleDescError = form.description.nextElementSibling;
         if (desc === "") {
             eleDescError.classList.remove('d-none');
             eleDescError.textContent = "Enter product description!";
@@ -118,7 +118,8 @@ function product(name) {
                 if (action === "new") {
                     productService.saveProduct(productObject);
                 } else {
-                    productService.updateProduct(productObject);
+                    // Fix: Pass product.name as the first argument
+                    productService.updateProduct(product.name, productObject);
                 }
                 eleNameError.classList.add('d-none');
                 form.reset();

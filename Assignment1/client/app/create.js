@@ -82,17 +82,17 @@ function validateProductForm(form) {
         eleStockError.textContent = "Stock must be a number!";
         valid = false;
     } else {
-        elePriceError.classList.add('d-none');
+        eleStockError.classList.add('d-none'); // Fix: Use eleStockError
     }
 
-    const desc = form.desc.value;
-    const eleDescError = form.desc.nextElementSibling;
+    const desc = form.description.value;
+    const eleDescError = form.description.nextElementSibling;
     if (desc === "") {
         eleDescError.classList.remove('d-none');
         eleDescError.textContent = "Enter product Description!";
         valid = false;
     } else {
-        elePriceError.classList.add('d-none');
+        eleDescError.classList.add('d-none'); // Fix: Use eleDescError
     }
     
     return valid;
