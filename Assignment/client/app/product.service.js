@@ -33,21 +33,39 @@ ProductService.prototype.getProducts = async function() {
     }
 }
 
-/*
- *  Get Single Product by Name
- */
+
+//  Get Single Product by Name
 ProductService.prototype.findProduct = async function(name) {
-    try {
-        const res = await fetch(new URL(`/api/products/${encodeURIComponent(name)}`, this.host), {
-            headers: this.headers,
-            method: 'GET',
-        });
-        if (!res.ok) throw new Error('Product not found');
-        return res.json();
-    } catch (err) {
-        throw new Error('Failed to fetch product');
-    }
+   try {
+       const res = await fetch(new URL(`/api/products/${encodeURIComponent(name)}`, this.host), {
+           headers: this.headers,
+           method: 'GET',
+       });
+       if (!res.ok) throw new Error('Product not found');
+       return res.json();
+   } catch (err) {
+       throw new Error('Failed to fetch product');
+   }
 }
+
+/*
+*  Update Existing Product
+*/
+ProductService.prototype.updateProduct = async function(name, product) {
+   try {
+       const res = await fetch(new URL(`/api/products/${encodeURIComponent(name)}`, this.host), {
+           headers: this.headers,
+           method: 'PUT',
+           body: JSON.stringify(product)
+       });
+       if (!res.ok) throw new Error('Failed to update product');
+       return res.json();
+   } catch (err) {
+       throw new Error(err.message || 'Failed to update product');
+   }
+}
+
+
 
 /*
  *  Get Paginated Products
@@ -84,23 +102,6 @@ ProductService.prototype.saveProduct = async function(product) {
         return res.json();
     } catch (err) {
         throw new Error(err.message || 'Failed to save product');
-    }
-}
-
-/*
- *  Update Existing Product
- */
-ProductService.prototype.updateProduct = async function(name, product) {
-    try {
-        const res = await fetch(new URL(`/api/products/${encodeURIComponent(name)}`, this.host), {
-            headers: this.headers,
-            method: 'PUT',
-            body: JSON.stringify(product)
-        });
-        if (!res.ok) throw new Error('Failed to update product');
-        return res.json();
-    } catch (err) {
-        throw new Error(err.message || 'Failed to update product');
     }
 }
 

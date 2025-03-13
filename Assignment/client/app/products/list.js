@@ -11,8 +11,9 @@ console.log('We are on the product list page');
 const eleEmpty = document.getElementById('empty-message');
 const eleTable = document.getElementById('product-list');
 const paginationElement = document.getElementById('pagination');
-
+const loadingElement = document.getElementById('loading');
 (async function() {
+    showLoading(); // Show loading initially
     const params = new URL(document.location).searchParams;
     
     // Handle test data creation
@@ -48,7 +49,21 @@ const paginationElement = document.getElementById('pagination');
     } catch (error) {
         console.error('Error loading products:', error);
         showEmptyState();
+    } finally {
+        hideLoading(); // Hide loading whether success or error
     }
+
+    function showLoading() {
+        loadingElement.classList.remove('d-none');
+        eleEmpty.classList.add('d-none');
+        eleTable.classList.add('d-none');
+        paginationElement.classList.add('d-none');
+    }
+
+    function hideLoading() {
+        loadingElement.classList.add('d-none');
+    }
+    
 })();
 
 function showEmptyState() {
