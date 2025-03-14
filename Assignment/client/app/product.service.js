@@ -19,7 +19,7 @@ function ProductService({ host, user }) {
 }
 
 /*
- *  Get All Products
+ *  Get All Products (Array Response)
  */
 ProductService.prototype.getProducts = async function() {
     try {
@@ -33,8 +33,9 @@ ProductService.prototype.getProducts = async function() {
     }
 }
 
-
-//  Get Single Product by Name
+/*
+ *  Get Single Product by Name (Array Response)
+ */
 ProductService.prototype.findProduct = async function(name) {
    try {
        const res = await fetch(new URL(`/api/products/${encodeURIComponent(name)}`, this.host), {
@@ -49,14 +50,15 @@ ProductService.prototype.findProduct = async function(name) {
 }
 
 /*
-*  Update Existing Product
-*/
+ *  Update Existing Product (Array Handling)
+ */
 ProductService.prototype.updateProduct = async function(name, product) {
    try {
+       // Wrap single product in array for consistent API expectations
        const res = await fetch(new URL(`/api/products/${encodeURIComponent(name)}`, this.host), {
            headers: this.headers,
            method: 'PUT',
-           body: JSON.stringify(product)
+           body: JSON.stringify([product])
        });
        if (!res.ok) throw new Error('Failed to update product');
        return res.json();
@@ -65,13 +67,27 @@ ProductService.prototype.updateProduct = async function(name, product) {
    }
 }
 
-
+/*
+ *  Create New Product (Array Handling)
+ */
+ProductService.prototype.saveProduct = async function(product) {
+    try {
+        const res = await fetch(new URL('/api/products', this.host), {
+            headers: this.headers,
+            method: 'POST',
+            body: JSON.stringify([product])
+        });
+        if (!res.ok) throw new Error('Failed to create product');
+        return res.json();
+    } catch (err) {
+        throw new Error(err.message || 'Failed to save product');
+    }
+}
 
 /*
- *  Get Paginated Products
+ *  Get Paginated Products (Array Response)
  */
-ProductService.prototype.getProductPage = async function({ page = 1, perPage = 15 }) 
-{
+ProductService.prototype.getProductPage = async function({ page = 1, perPage = 15 }) {
     const params = new URLSearchParams({ page, perPage });
     const url = new URL(`/api/products?${params.toString()}`, this.host);
     const req = new Request(url, {
@@ -83,25 +99,6 @@ ProductService.prototype.getProductPage = async function({ page = 1, perPage = 1
         return res.json();
     } catch (err) {
         return false;
-    }
-}
-
-    
-
-/*
- *  Create New Product
- */
-ProductService.prototype.saveProduct = async function(product) {
-    try {
-        const res = await fetch(new URL('/api/products', this.host), {
-            headers: this.headers,
-            method: 'POST',
-            body: JSON.stringify(product)
-        });
-        if (!res.ok) throw new Error('Failed to create product');
-        return res.json();
-    } catch (err) {
-        throw new Error(err.message || 'Failed to save product');
     }
 }
 
