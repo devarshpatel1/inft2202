@@ -17,10 +17,10 @@ async function loadProductData() {
     try {
         loadingElement.classList.remove('d-none'); // Show loading
         const product = await productService.findProduct(productName);
-        document.getElementById('name').value = product.name;
-        document.getElementById('price').value = product.price;
-        document.getElementById('stock').value = product.stock;
-        document.getElementById('description').value = product.description;
+        document.getElementById('name').value = product[0].name;
+        document.getElementById('price').value = product[0].price;
+        document.getElementById('stock').value = product[0].stock;
+        document.getElementById('description').value = product[0].description;
     } catch (error) {
         console.error('Error loading product data:', error);
         alert('Failed to load product data. Please try again.');
