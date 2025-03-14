@@ -144,7 +144,7 @@ function drawProductTable(products) {
                     window.location.reload();
                 }
             } catch (error) {
-                alert('PRODUCT DELETED SUCESSFULLY');
+                alert('PRODUCT DELETED SUCESSFULLY, Please Refresh the Product Page.');
             }
         });
 
