@@ -152,7 +152,7 @@ function drawProductTable(products) {
         const editBtn = document.createElement('a');
         editBtn.className = 'btn btn-primary mx-1';
         editBtn.innerHTML = '<i class="fa fa-edit"></i>';
-        editBtn.href = `./product.html?name=${product.name}`; 
+        editBtn.href = `./product.html?name=${encodeURIComponent(product.name)}`; 
 
         actionCell.append(deleteBtn, editBtn);
     });
