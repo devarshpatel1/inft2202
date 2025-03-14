@@ -1,8 +1,3 @@
-// Name: Devarsh Patel
-// Description: INFT 2202: Product Inventory System
-
-/* list.js */
-
 import productService from "../product.service.js";
 
 console.log('We are on the product list page');
@@ -12,10 +7,11 @@ const eleEmpty = document.getElementById('empty-message');
 const eleTable = document.getElementById('product-list');
 const paginationElement = document.getElementById('pagination');
 const loadingElement = document.getElementById('loading');
+
 (async function() {
     showLoading(); // Show loading initially
     const params = new URL(document.location).searchParams;
-    
+
     // Handle test data creation
     let recCount = params.get("records");
     if (recCount !== null) {
@@ -25,7 +21,7 @@ const loadingElement = document.getElementById('loading');
                 name: `Product ${index++}`,
                 price: 10,
                 description: "Sample product description.",
-                sound: "default-sound"
+                stock: 100
             });
         }
     }
@@ -34,7 +30,7 @@ const loadingElement = document.getElementById('loading');
         page: Number(params.get('page') ?? 1),
         perPage: Number(params.get('perPage') ?? 5)
     };
-    
+
     try {
         const response = await productService.getProductPage(recordPage);
         const { records, pagination } = response;
@@ -63,7 +59,6 @@ const loadingElement = document.getElementById('loading');
     function hideLoading() {
         loadingElement.classList.add('d-none');
     }
-    
 })();
 
 function showEmptyState() {
@@ -81,11 +76,11 @@ function showProductTable() {
 function drawPagination(paginationData) {
     paginationElement.innerHTML = '';
     const { page, perPage, pages } = paginationData;
-    
+
     if (pages > 1) {
         const ul = document.createElement("ul");
         ul.classList.add('pagination');
-        
+
         // Previous button
         ul.insertAdjacentHTML('beforeend', `
             <li class="page-item ${page === 1 ? 'disabled' : ''}">
@@ -128,7 +123,7 @@ function drawProductTable(products) {
     `;
 
     const tbody = eleTable.querySelector('tbody');
-    
+
     products.forEach(product => {
         const row = tbody.insertRow();
         row.insertCell().textContent = product.name;
@@ -137,15 +132,15 @@ function drawProductTable(products) {
         row.insertCell().textContent = product.stock || 'N/A';
 
         const actionCell = row.insertCell();
-        
+
         // Delete button
         const deleteBtn = document.createElement('button');
         deleteBtn.className = 'btn btn-danger mx-1';
         deleteBtn.innerHTML = '<i class="fa fa-trash"></i>';
         deleteBtn.addEventListener('click', async () => {
             try {
-                if(confirm(`Are you sure you want to delete ${product.name}?`)) {
-                    await productService.deleteProduct(product.name);
+                if (confirm(`Are you sure you want to delete ${product.name}?`)) {
+                    await productService.deleteProduct(product.id); // Use product.id or product.name
                     window.location.reload();
                 }
             } catch (error) {
@@ -153,12 +148,12 @@ function drawProductTable(products) {
                 alert('Failed to delete product. Please check console for details.');
             }
         });
-        
+
         // Edit button
         const editBtn = document.createElement('a');
         editBtn.className = 'btn btn-primary mx-1';
         editBtn.innerHTML = '<i class="fa fa-edit"></i>';
-        editBtn.href = `./product.html?name=${encodeURIComponent(product.name)}`;
+        editBtn.href = `./product.html?id=${encodeURIComponent(product.id)}`; // Use product.id or product.name
 
         actionCell.append(deleteBtn, editBtn);
     });
