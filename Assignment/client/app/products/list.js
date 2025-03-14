@@ -140,7 +140,7 @@ function drawProductTable(products) {
         deleteBtn.addEventListener('click', async () => {
             try {
                 if (confirm(`Are you sure you want to delete ${product.name}?`)) {
-                    await productService.deleteProduct(product.name); // Use product.id or product.name
+                    await productService.deleteProduct(product.name); 
                     window.location.reload();
                 }
             } catch (error) {
@@ -152,7 +152,7 @@ function drawProductTable(products) {
         const editBtn = document.createElement('a');
         editBtn.className = 'btn btn-primary mx-1';
         editBtn.innerHTML = '<i class="fa fa-edit"></i>';
-        editBtn.href = `./product.html?id=${encodeURIComponent(product.id)}`; // Use product.id or product.name
+        editBtn.href = `./product.html?name=${product.name}`; 
 
         actionCell.append(deleteBtn, editBtn);
     });
