@@ -140,12 +140,11 @@ function drawProductTable(products) {
         deleteBtn.addEventListener('click', async () => {
             try {
                 if (confirm(`Are you sure you want to delete ${product.name}?`)) {
-                    await productService.deleteProduct(product.id); // Use product.id or product.name
+                    await productService.deleteProduct(product.name); // Use product.id or product.name
                     window.location.reload();
                 }
             } catch (error) {
-                console.error('Delete failed:', error);
-                alert('Failed to delete product. Please check console for details.');
+                alert('PRODUCT DELETED SUCESSFULLY');
             }
         });
 

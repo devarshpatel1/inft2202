@@ -9,8 +9,9 @@ const productName = urlParams.get('name');
 // Fetch the product data and populate the form
 async function loadProductData() {
     if (!productName) {
-        alert('Product name is missing in the URL.');
+        alert('Product is not found, Please Try Again.');
         return;
+        
     }
 
     try {
